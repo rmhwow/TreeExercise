@@ -234,9 +234,13 @@ public class SetTesterMain {
 	 * @throws RuntimeException if a data item is not found in the SetTester
 	 */
 	public long evaluateContainsSearch(SetTesterADT<Integer> ds) {
-//		if(ds)
-//		
-		return 0;
+		long startTime = System.currentTimeMillis();
+		for (Integer elem : originalDataList) {
+			if(!ds.contains(elem))
+						throw new RuntimeException(elem + "should be in the tree");
+		}
+		return System.currentTimeMillis()-startTime;
+	
 	}
 
 	/**
@@ -247,8 +251,11 @@ public class SetTesterMain {
 	 * @return the time (milliseconds) for range search
 	 */
 	public long evaluateRangeSearch(SetTesterADT<Integer> ds) {
-		//TODO
-		return 0;
+		long startTime = System.currentTimeMillis();
+		for (Integer elem : originalDataList) {
+			ds.subSet(elem-10, elem+10);
+		}
+		return System.currentTimeMillis() -startTime;
 	}
 
 	/**

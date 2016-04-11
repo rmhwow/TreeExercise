@@ -39,7 +39,7 @@ public class BSTreeSetTester <K extends Comparable<K>> implements SetTesterADT<K
      * rebalanceThreshold is non-positive, isBalanced must be true.
      */
     boolean isBalanced;
-//balance factor is the height of hte left subtree - height of the right subtree
+//balance factor is the height of the left subtree - height of the right subtree
     
 
     /**
@@ -64,50 +64,67 @@ public class BSTreeSetTester <K extends Comparable<K>> implements SetTesterADT<K
         if(key == null){
         	throw new IllegalArgumentException();
         }
-    	if(contains(key)){
-        	throw new DuplicateKeyException();
-        }
-    	
+  
     	BSTNode<K> addNode = new BSTNode<K>(key);
+//    	this has to be root correct?
     	root = add(root, addNode);
 //    	update the keys
     	numKeys++;
+    	
 //    	update the height and the balance factor!!!
-    	if(root.getLeftChild() == null && root.getRightChild() != null){
-    		root.setHeight(root.getRightChild().getHeight());
-    	}if(root.getRightChild() == null && root.getLeftChild() != null){
-    		root.setHeight(root.getLeftChild().getHeight());
+    	updateHeight(root);
+    	
+    	if(isBalanced == false){
+    		rebalance();
     	}
-    	if(root.getLeftChild() != null && root.getRightChild() != null){
-    		root.setHeight(Math.max(root.getLeftChild().getHeight(),
-    				root.getRightChild().getHeight()) +1);
-    		root.setBalanceFactor(root.getLeftChild().getHeight() - root.getRightChild().getHeight());
-    	}
+    	
+//    	
     }
     
     private BSTNode<K> add(BSTNode<K> parent, BSTNode<K> newNode){    	
     	if(parent == null){
     		newNode.setHeight(1);
     		return newNode;
-    	}else if(newNode.getKey().compareTo(parent.getKey()) >0){
+    	}
+    	if(parent.getKey().equals(newNode.getKey())){
+        	throw new DuplicateKeyException();
+        }else if(newNode.getKey().compareTo(parent.getKey()) >0){
     		parent.setRightChild(add(parent.getRightChild(),newNode));
     	}else if(newNode.getKey().compareTo(parent.getKey()) < 0){
     		parent.setLeftChild(add(parent.getLeftChild(),newNode));
     	}
-    	if(parent.getLeftChild() != null && parent.getRightChild() != null){
-    		parent.setHeight(Math.max(parent.getLeftChild().getHeight(), parent.getRightChild().getHeight()) +1);
-    		parent.setBalanceFactor(parent.getLeftChild().getHeight() - parent.getRightChild().getHeight());
-    	}	
-    	if(parent.getLeftChild() == null && parent.getRightChild() != null){
-    		parent.setHeight(parent.getRightChild().getHeight()+1 );
-    		parent.setBalanceFactor(0-parent.getRightChild().getHeight());
-    	}if(parent.getRightChild() == null && parent.getLeftChild() != null){
-    		parent.setHeight(parent.getLeftChild().getHeight() +1);
-    		parent.setBalanceFactor(parent.getLeftChild().getHeight() -0);
+    	updateHeight(parent);
+    	
+    	if(rebalanceThreshold > 0){	
+//    		parent or root
+    		if(Math.abs(parent.getBalanceFactor()) > rebalanceThreshold){
+    			isBalanced = false;
+    		}
     	}
     	return parent;
     }
-
+    
+private void updateHeight(BSTNode<K> parent){
+	if(parent.getLeftChild() != null && parent.getRightChild() != null){
+		parent.setHeight(Math.max(parent.getLeftChild().getHeight(),
+				parent.getRightChild().getHeight()) +1);
+		parent.setBalanceFactor(parent.getLeftChild().getHeight() - 
+				parent.getRightChild().getHeight());
+	}	
+	if(parent.getLeftChild() == null && parent.getRightChild() != null){
+		parent.setHeight(parent.getRightChild().getHeight() + 1 );
+		parent.setBalanceFactor(0 - parent.getRightChild().getHeight());
+	} 
+	if(parent.getRightChild() == null && parent.getLeftChild() != null){
+		parent.setHeight(parent.getLeftChild().getHeight() +1);
+		parent.setBalanceFactor(parent.getLeftChild().getHeight() -0);
+	}
+	if(parent.getRightChild() == null && parent.getLeftChild() == null){
+		parent.setBalanceFactor(0);
+	}
+	
+	
+}
 
     /**
      * Rebalances the tree by:
@@ -118,14 +135,13 @@ public class BSTreeSetTester <K extends Comparable<K>> implements SetTesterADT<K
     public void rebalance() {
         K[] keys = (K[]) new Comparable[numKeys];
         Iterator<K> newiter = iterator();
-//        IS THIS RIGHT?!?!?
         int i = 0;
-        while(newiter.hasNext() && i < numKeys){
-        	//sort them first        	
-        	keys[i] = (newiter.next());
+        while(newiter.hasNext() && i < numKeys){      	
+        	keys[i] = newiter.next();
         	i++;
         }
-        sortedArrayToBST(keys, 0, keys.length-1);
+        root = sortedArrayToBST(keys, 0, numKeys-1);
+        isBalanced = true;
     }
 
     /**
@@ -141,30 +157,27 @@ public class BSTreeSetTester <K extends Comparable<K>> implements SetTesterADT<K
      * @param stop the last index of the part of the array used
      * @return root of the new balanced binary search tree
      */
-    private BSTNode<K> sortedArrayToBST(K[] keys, int start, int stop) {
-//    what are the base cases?
-//    	if either number is negative -> Illegal Argument
-//    	if the lenght is one return that node
-    	if(keys.length == 1 ){
-    		return new BSTNode<K>(keys[0]);
+    private BSTNode<K> sortedArrayToBST(K[] keys, int start, int stop) {    	
+    	BSTNode<K> node = root;
+    	
+    	if(start == stop ){
+    		return node = new BSTNode<K>(keys[start]);
     	}
-    	if(start + stop < 1){
-    		return root;
+    	if(start > stop){
+    		return null;
     	}
+    	
     	int center = (start + stop)/2;
-    	int frontmiddle = (start + center)/2;
-    	int backmiddle = (stop + center)/2;
-//    	base case - if there is no back middle and there is no front side
-//    	start from 0
-    	root = new BSTNode<K>(keys[center]);
-    	root.setLeftChild(new BSTNode<K>(keys[frontmiddle]));
-//    	how to set the rest of the subtree 
-    	root.setRightChild(new BSTNode<K>(keys[backmiddle]));
-//    	the ones below the center become the left subtree and the ones greater 
-//    	become the right subtree
-    	sortedArrayToBST(keys, start, frontmiddle);
-    	sortedArrayToBST(keys, backmiddle, stop);
-        return root;
+//    	do you have to assign things to the root here?
+    	node = new BSTNode<K>(keys[center]);
+    	
+    	node.setLeftChild(sortedArrayToBST(keys, start, center-1));
+
+    	node.setRightChild(sortedArrayToBST(keys, center+1, stop));
+    	
+    	updateHeight(node);
+    	
+        return node;
     }
 
     /**
@@ -254,6 +267,7 @@ public class BSTreeSetTester <K extends Comparable<K>> implements SetTesterADT<K
      */
     public void clear() {
         root = null;
+        numKeys = 0;
     }
 
     /**
