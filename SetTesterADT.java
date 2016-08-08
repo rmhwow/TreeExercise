@@ -7,8 +7,6 @@ import java.util.List;
  * of a set operations, e.g., delete is not included.
  *
  * DO NOT CHANGE THIS INTERFACE.
- *
- * @author CS367
  */
 
 public interface SetTesterADT<K> extends Iterable<K> {

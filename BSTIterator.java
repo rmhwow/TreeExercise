@@ -1,17 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
-//                   ALL STUDENTS COMPLETE THESE SECTIONS
-// Main Class File:  SetTesterMain.java
-// File:             BSTIterator.java, 
-// Semester:         CS 367 Spring 2016
-//
-// Author:           Morgan O'Leary
-// Email:            oleary4@wisc.edu
-// CS Login:         o-leary
-// Lecturer's Name:  Jim Skrentny
-// Lecture Number:   3
-//
 
-//////////////////////////// 80 columns wide //////////////////////////////////
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Stack;
@@ -19,8 +6,7 @@ import java.util.Stack;
 /**
  * The Iterator for Binary Search Tree (BST) that is built using Java's Stack
  * class. This iterator steps through the items BST using an INORDER traversal.
- *
- * @author CS367
+ 
  */
 public class BSTIterator<K> implements Iterator<K> {
 

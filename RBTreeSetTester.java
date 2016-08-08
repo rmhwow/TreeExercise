@@ -8,8 +8,7 @@ import java.util.TreeSet;
  * tree as the data structure.
  *
  * DO NOT MODIFY THIS CLASS.
- *
- * @author CS367
+
  */
 
 public class RBTreeSetTester<K extends Comparable<K>> implements SetTesterADT<K> {

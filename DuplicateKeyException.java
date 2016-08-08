@@ -1,7 +1,6 @@
 /**
  * Exception for Duplicate Key.
- *
- * @author CS367
+
  */
 public class DuplicateKeyException extends RuntimeException{
     

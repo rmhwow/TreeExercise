@@ -6,8 +6,7 @@ import java.util.List;
  * SetTesterADT implementation using an ArrayList as the data structure.
  *
  * DO NOT MODIFY THIS CLASS.
- *
- * @author CS367
+
  */
 public class ArrayListSetTester<K extends Comparable<K>> implements SetTesterADT<K> {
     

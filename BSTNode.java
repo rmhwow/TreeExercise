@@ -2,8 +2,6 @@
  * Node class for Binary Search Tree (BST).
  *
  * DO NOT MODIFY THIS CLASS.
- *
- * @author CS367
  */
 public class BSTNode<K> {
 

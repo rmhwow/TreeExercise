@@ -14,9 +14,7 @@ import java.util.List;
  * 
  * Use the getBuildMean(), getContainsSearchMean(), and getRangeSearchMean()
  * method to get the average of all trials added for that operation.
- * 
- * @author CS367
- */
+*/
 class Stats {
 
 	/** List of build trial run times (milliseconds). */

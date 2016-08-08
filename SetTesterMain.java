@@ -33,8 +33,7 @@ import java.util.Scanner;
  * different underlying data structures and thus different performance 
  * when the problem size is large.  Having each type implement a common 
  * interface will make it easier to run equivalent comparisons. </p>
- *
- * @author CS367
+
  */
 public class SetTesterMain {
 

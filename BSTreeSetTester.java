@@ -1,17 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
-//                   ALL STUDENTS COMPLETE THESE SECTIONS
-// Main Class File:  SetTesterMain.java
-// File:            BSTreeSetTester.java, 
-// Semester:         CS 367 Spring 2016
-//
-// Author:           Morgan O'Leary
-// Email:            oleary4@wisc.edu
-// CS Login:         o-leary
-// Lecturer's Name:  Jim Skrentny
-// Lecture Number:   3
-//
 
-//////////////////////////// 80 columns wide //////////////////////////////////
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,8 +17,7 @@ import java.util.List;
  * <p>Rebalancing is triggered if the absolute value of the balancedFfactor in
  * any BSTNode is &gt;= to the rebalanceThreshold in its BSTreeSetTester.
  * Rebalancing requires the BST to be completely rebuilt.</p>
- *
- * @author CS367
+
  */
 public class BSTreeSetTester <K extends Comparable<K>> implements SetTesterADT<K>{
 
