@@ -1,3 +1,18 @@
+///////////////////////////////////////////////////////////////////////////////
+//                   ALL STUDENTS COMPLETE THESE SECTIONS
+// Title:            Program 4
+// Files:            BSTreeSetTester.java, BSTIterator.java
+// Semester:         CS 367 Spring 2016
+//
+// Author:           Morgan O'Leary
+// Email:            oleary4@wisc.edu
+// CS Login:         o-leary
+// Lecturer's Name:  Jim Skrentny
+// Lecture Number:   3
+//
+
+//////////////////////////// 80 columns wide //////////////////////////////////
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -234,11 +249,16 @@ public class SetTesterMain {
 	 * @throws RuntimeException if a data item is not found in the SetTester
 	 */
 	public long evaluateContainsSearch(SetTesterADT<Integer> ds) {
+		//	assign the start time to the current milliseconds 	
 		long startTime = System.currentTimeMillis();
+		//for each element 	in the original data list	
 		for (Integer elem : originalDataList) {
+			//if the data structure doesn't contain 
+			// the element throw an exception			
 			if(!ds.contains(elem))
-						throw new RuntimeException(elem + "should be in the tree");
+					throw new RuntimeException(elem + "should be in the tree");
 		}
+		 // return the current time minus the start time
 		return System.currentTimeMillis()-startTime;
 	
 	}
@@ -251,10 +271,14 @@ public class SetTesterMain {
 	 * @return the time (milliseconds) for range search
 	 */
 	public long evaluateRangeSearch(SetTesterADT<Integer> ds) {
+		//	assign the start time to the current milliseconds 	
 		long startTime = System.currentTimeMillis();
+		//for each element 	in the original data list	
 		for (Integer elem : originalDataList) {
+			// check the subset of the element minus ten and add ten
 			ds.subSet(elem-10, elem+10);
 		}
+		 // return the current time minus the start time
 		return System.currentTimeMillis() -startTime;
 	}
 
